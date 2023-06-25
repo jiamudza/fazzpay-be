@@ -1,5 +1,5 @@
-const userModel = require("../models/user_models");
-const cloudinary = require("../../helper/cloudinary_config");
+const userModel = require("../models/user.models");
+const cloudinary = require("../helper/cloudinary_config");
 
 const userController = {
   get: async (req, res) => {

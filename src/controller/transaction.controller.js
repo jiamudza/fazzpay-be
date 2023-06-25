@@ -1,11 +1,11 @@
-const transactionModel = require('../models/transaction_models')
+const transactionModel = require('../models/transaction.models')
 
 const transController = {
     add : async(req, res) => {
-        const request = {
-            ...req.body
-        }
         try {
+            const request = {
+                ...req.body
+            }
             let result = await transactionModel.add(request)
             return res.status(201).send({message: 'success', data : result})
         } catch (error) {

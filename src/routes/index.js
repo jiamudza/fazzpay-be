@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express()
-const userRoute = require('./user_route')
-const authRoute = require('./auth_route')
-const transroute = require('./transaction_route')
+const userRoute = require('./user.route')
+const authRoute = require('./auth.route')
+const transroute = require('./transaction.route')
 
 router.get('/', (req, res) => {
     res.send('This is backend for Fazzpay')

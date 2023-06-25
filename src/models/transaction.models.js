@@ -1,5 +1,5 @@
 const { v4: uuidv4 } = require("uuid");
-const db = require("../../helper/connection");
+const db = require("../helper/connection");
 
 const transactionModel = {
 

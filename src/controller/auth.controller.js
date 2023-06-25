@@ -1,7 +1,7 @@
-const authModel = require("../models/auth_models");
+const authModel = require("../models/auth.models");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const userModel = require("../models/user_models");
+const userModel = require("../models/user.models");
 const { JWT_PRIVATE_KEY } = process.env;
 
 const authController = {

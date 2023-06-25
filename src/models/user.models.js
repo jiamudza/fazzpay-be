@@ -1,5 +1,5 @@
 const { uuid } = require("uuidv4");
-const db = require('../../helper/connection')
+const db = require('../helper/connection')
 
 const userModel = {
 

@@ -1,7 +1,7 @@
 const express = require('express')
-const formUpload = require('../../helper/formData')
+const formUpload = require('../helper/formData')
 const route = express()
-const userController = require('../controller/user_controller')
+const userController = require('../controller/user.controller')
 
 route.get('/', userController.get)
 route.get('/:user_id', userController.getById)
