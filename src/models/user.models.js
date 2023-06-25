@@ -1,42 +1,41 @@
-const { uuid } = require("uuidv4");
 const db = require('../helper/connection')
 
 const userModel = {
 
-    get : () => {
-        return new Promise((resolve, reject) => {
-            db.query(`select * from users`,
-            (err, result) => {
-                if(err) return reject(err.message)
-                else return resolve(result.rows)
-            })
+  get: () => {
+    return new Promise((resolve, reject) => {
+      db.query('select * from users',
+        (err, result) => {
+          if (err) return reject(err.message)
+          else return resolve(result.rows)
         })
-    },
+    })
+  },
 
-    getById : (userId) => {
-        return new Promise((resolve, reject) => {
-            db.query(`select * from users where user_id = '${userId}'`,
-            (err, result) => {
-                if(err) return reject(err.message)
-                else return resolve(result.rows[0])
-            })
+  getById: (userId) => {
+    return new Promise((resolve, reject) => {
+      db.query(`select * from users where user_id = '${userId}'`,
+        (err, result) => {
+          if (err) return reject(err.message)
+          else return resolve(result.rows[0])
         })
-    },
+    })
+  },
 
-    update: ({
-        userId,
-        userImage,
-        email,
-        phone,
-        firstName,
-        lastName,
-      }) => {
-        return new Promise((resolve, reject) => {
-          db.query(
+  update: ({
+    userId,
+    userImage,
+    email,
+    phone,
+    firstName,
+    lastName
+  }) => {
+    return new Promise((resolve, reject) => {
+      db.query(
             `select * from users where user_id = '${userId}'`,
             (err, result) => {
               if (err) {
-                return  reject(err.message);
+                return reject(err.message)
               } else {
                 db.query(
                   `UPDATE users SET  email ='${email || result.rows[0].email}', phone ='${
@@ -48,24 +47,24 @@ const userModel = {
                   }' WHERE user_id='${userId}'`,
                   (err, results) => {
                     if (err) {
-                     return reject(err.message);
+                      return reject(err.message)
                     } else {
-                     return resolve({
+                      return resolve({
                         userId,
                         userImage,
                         email,
                         phone,
                         lastName,
-                        firstName,
-                      });
+                        firstName
+                      })
                     }
                   }
-                );
+                )
               }
             }
-          );
-        });
-      },
+      )
+    })
+  }
 }
 
 module.exports = userModel

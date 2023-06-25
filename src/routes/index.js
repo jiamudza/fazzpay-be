@@ -5,9 +5,8 @@ const authRoute = require('./auth.route')
 const transroute = require('./transaction.route')
 
 router.get('/', (req, res) => {
-    res.send('This is backend for Fazzpay')
+  res.send('This is backend for Fazzpay')
 })
-
 
 router.use('/user', userRoute)
 router.use('/auth', authRoute)

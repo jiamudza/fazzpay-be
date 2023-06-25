@@ -1,8 +1,7 @@
-const authModel = require("../models/auth.models");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const userModel = require("../models/user.models");
-const { JWT_PRIVATE_KEY } = process.env;
+const authModel = require('../models/auth.models')
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+const { JWT_PRIVATE_KEY } = process.env
 
 const authController = {
   login: (req, res) => {
@@ -14,65 +13,65 @@ const authController = {
           JWT_PRIVATE_KEY,
           (err, token) => {
             return res.status(200).send({
-              message: "success",
+              message: 'success',
               data: {
                 token,
-                user: result,
-              },
-            });
+                user: result
+              }
+            })
           }
-        );
+        )
       })
       .catch((error) => {
-        return res.status(500).send({ message: error });
-      });
+        return res.status(500).send({ message: error })
+      })
   },
 
   register: (req, res) => {
     bcrypt.hash(req.body.password, 10, (err, hash) => {
       if (err) {
-        return res.status(500).send({ message: err.message });
+        return res.status(500).send({ message: err.message })
       } else {
         const request = {
           ...req.body,
-          password: hash,
-        };
+          password: hash
+        }
         return authModel
           .register(request)
           .then((result) => {
-            return res.status(201).send({ message: "success", data: result });
+            return res.status(201).send({ message: 'success', data: result })
           })
           .catch((error) => {
-            return res.status(500).send({ message: error });
-          });
+            return res.status(500).send({ message: error })
+          })
       }
-    });
+    })
   },
 
   updatePin: async (req, res) => {
-    const request = {
-      ...req.body,
-    };
     try {
-      let result = await authModel.pin(request);
+      const request = {
+        ...req.body
+      }
+      const result = await authModel.pin(request)
 
-      return res.status(201).send({ message: "success", data: result });
+      return res.status(201).send({ message: 'success', data: result })
     } catch (error) {
-      return res.status(500).send({ message: error });
+      return res.status(500).send({ message: error })
     }
   },
 
-  pinVerify: async(req, res) => {
+  pinVerify: async (req, res) => {
     const request = {
-        ...req.body
+      ...req.body
     }
     try {
-        const data = await authModel.pinVerify(request)
-        return res.status(201).send({ message: "success", data });
+      const data = await authModel.pinVerify(request)
+      return res.status(201).send({ message: 'success', data })
     } catch (error) {
-        return res.status(500).send({ message: error });
+      return res.status(500).send({ message: error })
     }
   }
-};
+}
 
-module.exports = authController;
+module.exports = authController

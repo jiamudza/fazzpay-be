@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "nodemon index.js",
+    "lint:scripts": "eslint --fix --ext .js --ignore-path .gitignore ."
   },
   "keywords": [
     "be",
@@ -25,7 +26,15 @@
     "jsonwebtoken": "^9.0.0",
     "multer": "^1.4.5-lts.1",
     "multer-storage-cloudinary": "^4.0.0",
+    "nodemon": "^2.0.22",
     "pg": "^8.10.0",
     "uuidv4": "^6.2.13"
+  },
+  "devDependencies": {
+    "eslint": "^8.43.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^16.0.1",
+    "eslint-plugin-promise": "^6.1.1"
   }
 }
