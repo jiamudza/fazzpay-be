@@ -8,7 +8,8 @@ const db = new Client({
   host: HOST,
   database: DB_NAME,
   password: PASSWORD,
-  port: DB_PORT
+  port: DB_PORT,
+  trustServerCertificate: true,
 })
 
 db.connect((err) => {
