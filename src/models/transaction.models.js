@@ -58,19 +58,16 @@ const transactionModel = {
   getById: (userId) => {
     return new Promise((resolve, reject) => {
       db.query(`select transaction.created_at, transaction.transaction_id, transaction.sender_id, transaction.receiver_id, users.user_id, users.first_name, users.last_name, users.user_image, transaction.amount, users.balance
-        from transaction
-        left join users
-        on transaction.sender_id = users.user_id or transaction.receiver_id = users.user_id
-        where transaction.receiver_id = '${userId}' or transaction.sender_id = '${userId}'
+      from transaction
+      left join users
+      on transaction.sender_id = users.user_id or transaction.receiver_id = users.user_id
+      where transaction.receiver_id = '${userId}' or transaction.sender_id = '${userId}'
+      
+        
         `, (err, result) => {
         if (err) return reject(err.message)
         else {
-          const data = result.rows.filter((value, index) => {
-            if (index % 2 !== 0) {
-              return value
-            }
-          })
-          return resolve(data)
+          return resolve(result.rows)
         }
       })
     })
