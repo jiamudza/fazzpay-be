@@ -28,7 +28,8 @@ const userModel = {
     email,
     phone,
     firstName,
-    lastName
+    lastName,
+    balance
   }) => {
     return new Promise((resolve, reject) => {
       db.query(
