@@ -24,12 +24,12 @@ const userModel = {
 
   update: ({
     userId,
+    balance,
     userImage,
     email,
     phone,
     firstName,
     lastName,
-    balance
   }) => {
     return new Promise((resolve, reject) => {
       db.query(
@@ -39,7 +39,7 @@ const userModel = {
                 return reject(err.message)
               } else {
                 db.query(
-                  `UPDATE users SET  email ='${email || result.rows[0].email}', balance ='${balance || balance + balance.rows[0].balance}', phone ='${
+                  `UPDATE users SET  email ='${email || result.rows[0].email}', balance ='${balance || balance + result.rows[0].balance}', phone ='${
                     phone || result.rows[0].phone
                   }',  user_image ='${userImage || result.rows[0].user_image}', first_name ='${
                     firstName || result.rows[0].first_name
@@ -52,12 +52,12 @@ const userModel = {
                     } else {
                       return resolve({
                         userId,
+                        balance,
                         userImage,
                         email,
                         phone,
                         lastName,
                         firstName,
-                        balance
                       })
                     }
                   }
