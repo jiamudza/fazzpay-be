@@ -23,10 +23,10 @@ const authModel = {
     })
   },
 
-  register: ({ firstName, lastName, email, password }) => {
+  register: ({ firstName, lastName, email, password, pin }) => {
     return new Promise((resolve, reject) => {
       db.query(
-        `INSERT INTO users (user_id, first_name, last_name, email, password) VALUES ('${uuidv4()}','${firstName}','${lastName}','${email}','${password}') RETURNING user_id`,
+        `INSERT INTO users (user_id, first_name, last_name, email, password, pin) VALUES ('${uuidv4()}','${firstName}','${lastName}','${email}','${password}', '${pin}') RETURNING user_id`,
         (err, result) => {
           if (err) {
             return reject(err.message)
@@ -35,7 +35,8 @@ const authModel = {
             firstName,
             lastName,
             email,
-            password
+            password,
+            pin
           })
         }
       )
