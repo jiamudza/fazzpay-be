@@ -3,9 +3,19 @@ const cloudinary = require("../helper/cloudinary_config");
 
 const userController = {
   get: async (req, res) => {
+    let { search, display_name, sortBy, page = 1, limit = 5 } = req.query;
+    let offset = (page - 1) * limit;
+
     try {
-      const result = await userModel.get();
-      return res.status(200).send({ message: "success", data: result });
+      const result = await userModel.get(
+        search,
+        display_name,
+        sortBy,
+        limit,
+        offset
+      );
+      return res.status(200).send({ message: "success", data: result, page,
+    limit });
     } catch (error) {
       return res.status(500).send({ message: error });
     }

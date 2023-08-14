@@ -1,12 +1,35 @@
 const db = require("../helper/connection");
 
 const userModel = {
-  get: () => {
+  query: function (search, display_name, sortBy, limit, offset) {
+    let orderQuery = `ORDER BY display_name ${sortBy} LIMIT ${limit} OFFSET ${offset}`;
+
+    if (!search && !display_name) {
+      return orderQuery;
+    } else if (search && display_name) {
+      return `WHERE display_name LIKE '%${search}%' AND display_name LIKE '${display_name}%' ${orderQuery}`;
+    } else if (search || display_name) {
+      return `WHERE display_name LIKE '%${search}%' OR display_name LIKE '${display_name}%' ${orderQuery}`;
+    } else {
+      return orderQuery;
+    }
+  },
+
+  get: (search, display_name, sortBy = "ASC", limit = 10, offset = 0) => {
     return new Promise((resolve, reject) => {
-      db.query("select * from users", (err, result) => {
-        if (err) return reject(err.message);
-        else return resolve(result.rows);
-      });
+      db.query(
+        `select * from users ${userModel.query(
+          search,
+          display_name,
+          sortBy,
+          limit,
+          offset
+        )}`,
+        (err, result) => {
+          if (err) return reject(err.message);
+          else return resolve(result.rows);
+        }
+      );
     });
   },
 
@@ -43,8 +66,8 @@ const userModel = {
                 email || result.rows[0].email
               }', phone ='${phone || result.rows[0].phone}',  user_image ='${
                 userImage || result.rows[0].user_image
-              }', first_name ='${
-                firstName || result.rows[0].first_name
+              }', display_name ='${
+                firstName || result.rows[0].display_name
               }', last_name ='${
                 lastName || result.rows[0].last_name
               }' WHERE user_id='${userId}'`,
