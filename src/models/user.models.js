@@ -7,9 +7,9 @@ const userModel = {
     if (!search && !display_name) {
       return orderQuery;
     } else if (search && display_name) {
-      return `WHERE display_name LIKE '%${search}%' AND display_name LIKE '${display_name}%' ${orderQuery}`;
+      return `WHERE LOWER(display_name) LIKE '%${search}%' AND LOWER(display_name) LIKE '${display_name}%' ${orderQuery}`;
     } else if (search || display_name) {
-      return `WHERE display_name LIKE '%${search}%' OR display_name LIKE '${display_name}%' ${orderQuery}`;
+      return `WHERE LOWER(display_name) LIKE '%${search}%' OR LOWER(display_name) LIKE '${display_name}%' ${orderQuery}`;
     } else {
       return orderQuery;
     }
