@@ -17,19 +17,27 @@ const userModel = {
 
   get: (search, display_name, sortBy = "ASC", limit = 10, offset = 0) => {
     return new Promise((resolve, reject) => {
-      db.query(
-        `select * from users ${userModel.query(
-          search,
-          display_name,
-          sortBy,
-          limit,
-          offset
-        )}`,
-        (err, result) => {
-          if (err) return reject(err.message);
-          else return resolve(result.rows);
+      db.query("select count(user_id) from users", (err, count) => {
+        if (err) return reject(err.message);
+        else {
+          db.query(
+            `select * from users ${userModel.query(
+              search,
+              display_name,
+              sortBy,
+              limit,
+              offset
+            )}`,
+            (err, result) => {
+              if (err) return reject(err.message);
+              else return resolve({
+                count: count.rows[0].count,
+                data: result.rows
+              });
+            }
+          );
         }
-      );
+      });
     });
   },
 
