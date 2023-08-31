@@ -67,18 +67,33 @@ const transactionModel = {
   getById: (userId) => {
     return new Promise((resolve, reject) => {
       db.query(
-        `select transaction.created_at, transaction.transaction_id, transaction.sender_id, transaction.receiver_id, users.user_id, users.first_name, users.last_name, users.user_image, transaction.sender_number, transaction.receiver_number, transaction.amount, users.balance
-      from transaction
-      left join users
-      on transaction.sender_id = users.user_id or transaction.receiver_id = users.user_id
-      where transaction.receiver_id = '${userId}' or transaction.sender_id = '${userId}'
-      
-        
-        `,
-        (err, result) => {
-          if (err) return reject(err.message);
+        `select sum(amount) from transaction where sender_id = '${userId}'`,
+        (err, expand) => {
+          if (err) reject(err.message);
           else {
-            return resolve(result.rows);
+            db.query(
+              `select sum(amount) from transaction where receiver_id = '${userId}'`
+            ),
+              (err, income) => {
+                if (err) reject(err.message);
+                else {
+                  db.query(
+                    `select transaction.created_at, transaction.transaction_id, transaction.sender_id, transaction.receiver_id, users.user_id, users.first_name, users.last_name, users.user_image, transaction.sender_number, transaction.receiver_number, transaction.amount, users.balance from transaction left join users
+                    on transaction.sender_id = users.user_id or transaction.receiver_id = users.user_id
+                    where transaction.receiver_id = '${userId}' or transaction.sender_id = '${userId}'`,
+                    (err, result) => {
+                      if (err) return reject(err.message);
+                      else {
+                        return resolve({
+                          data: result.rows,
+                          expand,
+                          income
+                        });
+                      }
+                    }
+                  );
+                }
+              };
           }
         }
       );
