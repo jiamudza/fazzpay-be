@@ -3,11 +3,11 @@ const db = require('../helper/connection')
 
 const transactionModel = {
 
-  add: ({ senderId, receiverId, amount }) => {
+  add: ({ senderId, receiverId, amount, senderNumber, receiverNumber }) => {
     return new Promise((resolve, reject) => {
       db.query(
-        'insert into transaction (transaction_id, sender_id, receiver_id, amount, created_at) values($1,$2,$3,$4,$5)',
-        [uuidv4(), senderId, receiverId, amount, new Date()],
+        'insert into transaction (transaction_id, sender_id, receiver_id, sender_number, receiver_number, amount, created_at) values($1,$2,$3,$4,$5,$6,$7)',
+        [uuidv4(), senderId, receiverId, senderId, receiverNumber, amount, new Date()],
         (err, result) => {
           if (err) return reject(err.message)
           else {
