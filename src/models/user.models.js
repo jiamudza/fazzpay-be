@@ -30,10 +30,11 @@ const userModel = {
             )}`,
             (err, result) => {
               if (err) return reject(err.message);
-              else return resolve({
-                count: count.rows[0].count,
-                data: result.rows
-              });
+              else
+                return resolve({
+                  count: count.rows[0].count,
+                  data: result.rows,
+                });
             }
           );
         }
@@ -61,7 +62,8 @@ const userModel = {
     firstName,
     lastName,
     balance,
-    pin
+    password,
+    pin,
   }) => {
     return new Promise((resolve, reject) => {
       db.query(
@@ -75,11 +77,15 @@ const userModel = {
                 email || result.rows[0].email
               }', phone ='${phone || result.rows[0].phone}',  user_image ='${
                 userImage || result.rows[0].user_image
-              }', first_name ='${firstName || result.rows[0].first_name}', display_name ='${
+              }', first_name ='${
+                firstName || result.rows[0].first_name
+              }', display_name ='${
                 firstName || result.rows[0].display_name
               }', last_name ='${
                 lastName || result.rows[0].last_name
-              }', pin ='${pin || result.rows[0].pin}' WHERE user_id='${userId}'`,
+              }', password = '${password || result.rows[0].password}', pin ='${
+                pin || result.rows[0].pin
+              }' WHERE user_id='${userId}'`,
               (err, results) => {
                 if (err) {
                   return reject(err.message);
@@ -92,7 +98,8 @@ const userModel = {
                     firstName,
                     lastName,
                     balance,
-                    pin
+                    password,
+                    pin,
                   });
                 }
               }
