@@ -61,6 +61,7 @@ const userModel = {
     firstName,
     lastName,
     balance,
+    pin
   }) => {
     return new Promise((resolve, reject) => {
       db.query(
@@ -74,11 +75,11 @@ const userModel = {
                 email || result.rows[0].email
               }', phone ='${phone || result.rows[0].phone}',  user_image ='${
                 userImage || result.rows[0].user_image
-              }', display_name ='${
+              }', first_name ='${firstName || result.rows[0].first_name}', display_name ='${
                 firstName || result.rows[0].display_name
               }', last_name ='${
                 lastName || result.rows[0].last_name
-              }' WHERE user_id='${userId}'`,
+              }', pin ='${pin || result.rows[0].pin}' WHERE user_id='${userId}'`,
               (err, results) => {
                 if (err) {
                   return reject(err.message);
@@ -91,6 +92,7 @@ const userModel = {
                     firstName,
                     lastName,
                     balance,
+                    pin
                   });
                 }
               }
