@@ -10,7 +10,7 @@ const transactionModel = {
           uuidv4(),
           senderId,
           receiverId,
-          senderId,
+          senderNumber,
           receiverNumber,
           amount,
           new Date(),
