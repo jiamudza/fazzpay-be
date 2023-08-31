@@ -62,7 +62,6 @@ const userModel = {
     firstName,
     lastName,
     balance,
-    password,
     pin,
   }) => {
     return new Promise((resolve, reject) => {
@@ -83,7 +82,7 @@ const userModel = {
                 firstName || result.rows[0].display_name
               }', last_name ='${
                 lastName || result.rows[0].last_name
-              }', password = '${password || result.rows[0].password}', pin ='${
+              }', pin ='${
                 pin || result.rows[0].pin
               }' WHERE user_id='${userId}'`,
               (err, results) => {
@@ -98,7 +97,6 @@ const userModel = {
                     firstName,
                     lastName,
                     balance,
-                    password,
                     pin,
                   });
                 }

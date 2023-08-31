@@ -52,26 +52,19 @@ const userController = {
     }
   },
 
-  updateProfile: (req, res) => {
-   bcrypt.hash(req.body.password, 10, async(err, hash) => {
-    if(err) {
-      return res.status(500).send({message: err.message})
-    } else {
-      try {
-        const request = {
-          ...req.body,
-          password: hash,
-          firstName: req.body.firstName,
-          userId: req.params.user_id,
-        };
-  
-        const result = await userModel.updateProfile(request);
-        return res.status(201).send({ message: "success", data: result });
-      } catch (error) {
-        return res.status(500).send({ message: error });
-      }
+  updateProfile: async(req, res) => {
+    try {
+      const request = {
+        ...req.body,
+        firstName: req.body.firstName,
+        userId: req.params.user_id,
+      };
+
+      const result = await userModel.updateProfile(request);
+      return res.status(201).send({ message: "success", data: result });
+    } catch (error) {
+      return res.status(500).send({ message: error });
     }
-   })
   },
 
   topup: async (req, res) => {
