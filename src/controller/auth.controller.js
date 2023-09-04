@@ -71,6 +71,31 @@ const authController = {
     } catch (error) {
       return res.status(500).send({ message: error })
     }
+  },
+
+  updatePassword: async(req, res) => {
+    bcrypt.hash(req.body.newPassword, 10, (err, hash) => {
+      if(err) {
+        return res.status(500).send({message: err.message})
+      } else {
+        if(req.body.newPassword !== req.body.confirmNewPassword) {
+          return res.status(500).send({message: 'New password is not the same'})
+        } else {
+          const request = {
+            ...req.body,
+            newPassword: hash,
+          }
+  
+          return authModel.changepassword(request)
+          .then(result => {
+            return res.status(201).send({message: 'success', data: result})
+          })
+          .catch(err => {
+            return res.status(500).send({message: err})
+          })
+        }
+      }
+    })
   }
 }
 
