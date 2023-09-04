@@ -120,5 +120,21 @@ const authModel = {
       );
     });
   },
+
+  getProfileByEmail: ({email}) => {
+    return new Promise((resolve, reject) => {
+      db.query(`select * from users where email='${email}'`, (err, result) => {
+        if(err) {
+          return reject(err.message)
+        } else {
+          if(result.rows.length === 0) {
+            return reject("Email is not registered yet")
+          } else {
+            return resolve(result.rows[0])
+          }
+        }
+      })
+    })
+  }
 };
 module.exports = authModel;

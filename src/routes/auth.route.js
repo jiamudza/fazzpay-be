@@ -8,5 +8,6 @@ route.post('/login', authController.login)
 route.post('/pin', authController.pinVerify)
 route.patch('/update-pin', authController.updatePin)
 route.patch('/update-password', authController.updatePassword)
+route.get('/forgotpassword', authController.forgotPassword);
 
 module.exports = route
