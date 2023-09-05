@@ -630,7 +630,7 @@ const authController = {
 
         sendEmail(subject, html, send_to, sent_from, reply_to)
           .then((results) =>
-            res.status(200).send({ success: "true", message: "email sent" })
+            res.status(201).send({ success: "true", message: "email sent" })
           )
           .catch((err) => res.json(500).send(err.message));
       })
