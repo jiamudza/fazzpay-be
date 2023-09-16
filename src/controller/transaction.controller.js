@@ -20,6 +20,19 @@ const transController = {
     } catch (error) {
       return res.status(500).send({ message: error })
     }
+  },
+
+  getByIdFilter: async(req, res) => {
+    try{
+      let { search, sortBy, page = 1, limit = 20 } = req.query;
+      let offset = (page - 1) * limit;
+      const userId = req.params.user_id
+      const result = await transactionModel.getByIdFilter(userId, search, sortBy, limit, offset)
+      return res.status(200).send({message: 'success', data: result})
+    }
+    catch(err) {
+      return res.status(500).send({message: err})
+    }
   }
 }
 
